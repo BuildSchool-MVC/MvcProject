@@ -13,7 +13,7 @@ namespace ModelsLibrary.DtO_Models
         public int CustomerID { get; set; }
         public string Transport { get; set; }
         public string Payment { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set;  }
 
     }
 }

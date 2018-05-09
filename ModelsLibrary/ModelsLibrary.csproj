@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer.cs" />
+    <Compile Include="DtO_Models\Customer.cs" />
     <Compile Include="DtO_Models\Categories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

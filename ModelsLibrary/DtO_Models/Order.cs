@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ModelsLibrary.DtO_Models
 {
-    class Order
+    public class Order
     {
+        public int OrderID { get; set; }
+        public DateTime OrderDay { get; set; }
+        public int CustomerID { get; set; }
+        public string Transport { get; set; }
+        public string Payment { get; set; }
+        public string Status { get; set; }
+
     }
 }

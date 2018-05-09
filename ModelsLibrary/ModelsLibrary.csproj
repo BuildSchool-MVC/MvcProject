@@ -48,9 +48,8 @@
     <Compile Include="DtO_Models\Products.cs" />
     <Compile Include="DtO_Models\ShoppingcartDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ProductsRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

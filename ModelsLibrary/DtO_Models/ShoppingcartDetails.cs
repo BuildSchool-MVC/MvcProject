@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class ShoppingcartDetails
+namespace ModelsLibrary.DtO_Models
 {
-    public int CustomerID { get; set; }
-    public int ProductID { get; set; }
-    public int Quantity { get; set; }
+    public class ShoppingcartDetails
+    {
+        public int CustomerID { get; set; }
+        public int ProductID { get; set; }
+        public int Quantity { get; set; }
+    }
 }

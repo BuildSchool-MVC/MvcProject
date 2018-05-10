@@ -22,6 +22,6 @@ namespace ModelsLibrary.DtO_Models
 
         public DateTime Uptime { get; set; }
 
-        public DateTime Downtime { get; set; }
+        public DateTime? Downtime { get; set; }
     }
 }

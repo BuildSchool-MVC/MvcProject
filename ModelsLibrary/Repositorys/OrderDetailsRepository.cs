@@ -28,6 +28,11 @@ namespace ModelsLibrary.Repository
             connection.Close();
         }
 
+        public object FindById()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(OrderDetails model)
         {
             SqlConnection connection = new SqlConnection(
@@ -59,7 +64,8 @@ namespace ModelsLibrary.Repository
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public OrderDetails FindById(string OrderId)
+
+        public IEnumerable<OrderDetails> FindById(string OrderId)
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.; database=BuildSchool; integrated security=true");
@@ -72,7 +78,7 @@ namespace ModelsLibrary.Repository
             connection.Open();
 
             var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-            var orderdetails = new OrderDetails();
+            var orderdetails = new List<OrderDetails>();
 
             var properties = typeof(OrderDetails).GetProperties();
             OrderDetails orderdetail = null;
@@ -88,9 +94,6 @@ namespace ModelsLibrary.Repository
 
                     if (!reader.IsDBNull(i)) property.SetValue(orderdetail, reader.GetValue(i));
                 }
-                //orderdetails.OrderID = (int)reader.GetValue(reader.GetOrdinal("OrderID"));
-                //orderdetails.ProductID = (int)reader.GetValue(reader.GetOrdinal("ProductID"));
-                //orderdetails.Quantity = (int)reader.GetValue(reader.GetOrdinal("Quantity"));
             }
             reader.Close();
             return orderdetails;
@@ -99,8 +102,8 @@ namespace ModelsLibrary.Repository
         public IEnumerable<OrderDetails> GetAll()
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=; integrated security=true");
-            var sql = "SELECT * FROM OrderDetails";
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "SELECT * FROM [Order Details]";
 
             SqlCommand command = new SqlCommand(sql, connection);
             connection.Open();

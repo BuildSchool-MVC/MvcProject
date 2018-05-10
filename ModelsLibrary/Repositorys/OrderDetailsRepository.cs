@@ -63,7 +63,7 @@ namespace ModelsLibrary.Repository
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.; database=BuildSchool; integrated security=true");
-            var sql = "SELECT * FROM Customers WHERE CustomerID = @id";
+            var sql = "SELECT * FROM Customers WHERE OrderID=@OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -74,15 +74,25 @@ namespace ModelsLibrary.Repository
             var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
             var orderdetails = new OrderDetails();
 
+            var properties = typeof(OrderDetails).GetProperties();
+            OrderDetails orderdetail = null;
+
             while (reader.Read())
             {
-                orderdetails.OrderID = (int)reader.GetValue(reader.GetOrdinal("OrderID"));
-                orderdetails.ProductID = (int)reader.GetValue(reader.GetOrdinal("ProductID"));
-                orderdetails.Quantity = (int)reader.GetValue(reader.GetOrdinal("Quantity"));
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var fieldName = reader.GetName(i);
+                    var property = properties.FirstOrDefault((p) => p.Name == fieldName);
+
+                    if (property == null) continue;
+
+                    if (!reader.IsDBNull(i)) property.SetValue(orderdetail, reader.GetValue(i));
+                }
+                //orderdetails.OrderID = (int)reader.GetValue(reader.GetOrdinal("OrderID"));
+                //orderdetails.ProductID = (int)reader.GetValue(reader.GetOrdinal("ProductID"));
+                //orderdetails.Quantity = (int)reader.GetValue(reader.GetOrdinal("Quantity"));
             }
-
             reader.Close();
-
             return orderdetails;
         }
 
@@ -90,7 +100,7 @@ namespace ModelsLibrary.Repository
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.; database=; integrated security=true");
-            var sql = "SELECT * FROM Customers";
+            var sql = "SELECT * FROM OrderDetails";
 
             SqlCommand command = new SqlCommand(sql, connection);
             connection.Open();

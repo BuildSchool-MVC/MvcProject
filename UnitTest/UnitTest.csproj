@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DbReaderModelBinder\DbReaderModelBinder.cs" />
     <Compile Include="Repositorys\OrderDetailsRepositoryTest.cs" />
+    <Compile Include="Repositorys\OrderRepositoryTest.cs" />
     <Compile Include="Repositorys\ProductsRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

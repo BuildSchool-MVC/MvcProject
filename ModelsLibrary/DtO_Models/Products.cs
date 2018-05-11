@@ -14,6 +14,7 @@ namespace ModelsLibrary.DtO_Models
         public decimal UnitPrice { get; set; }
         public int UnitsInStock { get; set; }
         public string Size { get; set; }
+        public string Color { get; set; }
         public DateTime Uptime { get; set; }
         public DateTime? Downtime { get; set; }
     }

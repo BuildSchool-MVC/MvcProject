@@ -14,6 +14,7 @@ namespace ModelsLibrary.DtO_Models
         public string Transport { get; set; }
         public string Payment { get; set; }
         public string Status { get; set; }
+        public DateTime StatusUpdateDay { get; set; }
 
     }
 }

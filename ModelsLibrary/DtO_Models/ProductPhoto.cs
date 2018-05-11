@@ -10,5 +10,7 @@ namespace ModelsLibrary.DtO_Models
     {
         public int PhotoID { get; set; }
         public int ProductID { get; set; }
+
+        public string PhotoPath { get; set; }
     }
 }

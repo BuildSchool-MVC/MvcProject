@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="DtO_Models\Customer.cs" />
     <Compile Include="DtO_Models\Categories.cs" />
-    <Compile Include="DtO_Models\DbReaderModelBinder.cs" />
     <Compile Include="DtO_Models\Order.cs" />
     <Compile Include="DtO_Models\OrderDetails.cs" />
     <Compile Include="DtO_Models\ProductPhoto.cs" />

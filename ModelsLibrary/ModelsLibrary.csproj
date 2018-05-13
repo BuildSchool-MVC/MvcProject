@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="DtO_Models\Customer.cs" />
     <Compile Include="DtO_Models\Categories.cs" />
-    <Compile Include="DtO_Models\DbReaderModelBinder.cs" />
     <Compile Include="DtO_Models\Order.cs" />
     <Compile Include="DtO_Models\OrderDetails.cs" />
     <Compile Include="DtO_Models\ProductPhoto.cs" />
@@ -51,7 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\CustomerRepository.cs" />
     <Compile Include="Repositorys\OrderDetailsRepository.cs" />
+    <Compile Include="Repositorys\OrderRepository.cs" />
+    <Compile Include="Repositorys\ProductPhotoRepository.cs" />
     <Compile Include="Repositorys\ProductsRepository.cs" />
+    <Compile Include="Repositorys\ShoppingcartDetailsRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

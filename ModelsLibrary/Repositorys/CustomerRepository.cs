@@ -40,9 +40,7 @@ namespace ModelsLibrary.Repository
             SqlCommand command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@CustomerID", model.CustomerID);
-            command.Parameters.AddWithValue("@CustomerName", model.CustomerName);
-            command.Parameters.AddWithValue("@Birthday", model.Birthday);
-            command.Parameters.AddWithValue("@Account", model.Account);
+            command.Parameters.AddWithValue("@CustomerName", model.CustomerName);        
             command.Parameters.AddWithValue("@Password", model.Password);
             command.Parameters.AddWithValue("@ShoppingCash", model.ShoppingCash);
             command.Parameters.AddWithValue("@Email", model.Email);

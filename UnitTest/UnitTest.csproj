@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbReaderModelBinder\DbReaderModelBinder.cs" />
+    <Compile Include="Repositorys\CustomerRepositoryTest.cs" />
     <Compile Include="Repositorys\OrderDetailsRepositoryTest.cs" />
     <Compile Include="Repositorys\OrderRepositoryTest.cs" />
     <Compile Include="Repositorys\ProductsRepositoryTests.cs" />

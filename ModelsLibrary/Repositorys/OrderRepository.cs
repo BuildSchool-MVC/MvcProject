@@ -13,7 +13,7 @@ namespace ModelsLibrary.Repositorys
     {
         private string _connectionString = "data source =. ; database = BuildSchool ; integrated security=true";
 
-        public void Create(Order model)  //新增
+        public void Create(Order model)  //新增訂單
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
             var sql = @"INSERT INTO [Order] 
@@ -34,7 +34,7 @@ namespace ModelsLibrary.Repositorys
             connection.Close();
         }
 
-        public void Update(Order model)  //修改
+        public void Update(Order model)  //修改訂單
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
             var sql = @"UPDATE [Order] 
@@ -75,12 +75,12 @@ namespace ModelsLibrary.Repositorys
             connection.Close();
         }
 
-
-
-        public Order FindById(string orderId)
+        public Order CheckStatus(string orderId) //查詢訂單狀態
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
-            var sql = "SELECT * FROM [Order] WHERE OrderID = @OrderID";
+            var sql = @"SELECT Status
+                        FROM [Order]
+                        WHERE OrderID = @OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -89,7 +89,48 @@ namespace ModelsLibrary.Repositorys
             connection.Open();
 
             var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-            //var order = new Order();
+            var properties = typeof(Order).GetProperties();
+            Order order = null;
+
+
+            while (reader.Read())
+            {
+                order = new Order();
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var fieldName = "Status";
+                    var property = properties.FirstOrDefault(
+                        p => p.Name == fieldName);
+
+                    if (property == null)
+                        continue;
+
+                    if (!reader.IsDBNull(i))
+                        property.SetValue(order,
+                            reader.GetValue(i));
+                }
+
+            }
+
+            reader.Close();
+
+            return order;
+
+        }
+
+        public Order FindById(string orderId) //用id查詢
+        {
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"SELECT * FROM [Order] 
+                        WHERE OrderID = @OrderID";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@OrderID", orderId);
+
+            connection.Open();
+
+            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
             var properties = typeof(Order).GetProperties();
             Order order = null;
 
@@ -118,7 +159,7 @@ namespace ModelsLibrary.Repositorys
             return order;
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<Order> GetAll()  //查詢所有資料
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
             var sql = "SELECT * FROM [Order]";

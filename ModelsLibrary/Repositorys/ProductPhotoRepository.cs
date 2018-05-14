@@ -14,13 +14,14 @@ namespace ModelsLibrary.Repository
         public void Create(ProductPhoto model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
-            var sql = "INSERT INTO ProductPhoto VALUES (@PhotoID, @ProductID)";
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "INSERT INTO ProductPhoto VALUES (@PhotoID, @ProductID, @PhotoPath)";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@PhotoID", model.PhotoID);
             command.Parameters.AddWithValue("@ProductID", model.ProductID);
+            command.Parameters.AddWithValue("@PhotoPath", model.PhotoPath);
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -30,13 +31,14 @@ namespace ModelsLibrary.Repository
         public void Update(ProductPhoto model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
-            var sql = "UPDATE ProductPhoto SET PhotoID=@PhotoID, ProductID=@ProductID";
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "UPDATE ProductPhoto SET PhotoID=@PhotoID, ProductID=@ProductID, PhotoPath=@PhotoPath";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@PhotoID", model.PhotoID);
             command.Parameters.AddWithValue("@ProductID", model.ProductID);
+            command.Parameters.AddWithValue("@PhotoPath", model.PhotoPath);
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -46,12 +48,12 @@ namespace ModelsLibrary.Repository
         public void Delete(ProductPhoto model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
-            var sql = "DELETE FROM ProductPhoto WHERE PhotoID = @PhotoID";
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "DELETE FROM ProductPhoto WHERE ProductID = @ProductID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
-            command.Parameters.AddWithValue("@PhotoID", model.PhotoID);
+            command.Parameters.AddWithValue("@ProductID", model.ProductID);
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -61,21 +63,12 @@ namespace ModelsLibrary.Repository
         public IEnumerable<ProductPhoto> FindById(int ProductID)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
-            var sql = "";
-            SqlCommand command = null;
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "SELECT * FROM ProductPhoto WHERE ProductID = @ProductID";
+            SqlCommand command = new SqlCommand(sql, connection);
 
-            if ( ProductID != 0)
-            {
-                sql = "SELECT * FROM ProductPhoto WHERE ProductID = @ProductID";
-                command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@ProductID", ProductID);
-            }
-            else
-            {
-                sql = "SELECT * FROM ProductPhoto";
-                command = new SqlCommand(sql, connection);
-            }
+            command.Parameters.AddWithValue("@ProductID", ProductID);
+            
             connection.Open();
 
             var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
@@ -97,9 +90,26 @@ namespace ModelsLibrary.Repository
 
         public IEnumerable<ProductPhoto> GetAll()
         {
+            SqlConnection connection = new SqlConnection(
+                "data source=.; database=BuildSchool; integrated security=true");
+            var sql = "SELECT * FROM ProductPhoto";
+            SqlCommand command = new SqlCommand(sql, connection);
+
+            connection.Open();
+
+            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
             var Photos = new List<ProductPhoto>();
 
-            Photos = FindById(0).ToList();
+            while (reader.Read())
+            {
+                var Photo = new ProductPhoto();
+                Photo.PhotoID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("PhotoID")));
+                Photo.ProductID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("ProductID")));
+                Photo.PhotoPath = reader.GetValue(reader.GetOrdinal("PhotoPath")).ToString();
+                Photos.Add(Photo);
+            }
+
+            reader.Close();
 
             return Photos;
         }

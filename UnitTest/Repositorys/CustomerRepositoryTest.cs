@@ -30,11 +30,12 @@ namespace CustomerTest
             {
                 CustomerID = 2,
                 CustomerName = "Coco",
-                Birthday = Convert.ToDateTime("1999-12-12"),
+                Birthday =new DateTime( 1999,12,12),
                 Account = "coco",
                 Password = "123",
                 Phone="0923456432",
-                ShoppingCash = 0               
+                ShoppingCash = 0,
+                Email="qwe"
             };
             CustomerRepository Repository = new CustomerRepository();
             Repository.Cterae(customer);
@@ -48,16 +49,28 @@ namespace CustomerTest
             {
                 CustomerID = 2,
                 CustomerName = "Cococo",
-                Birthday = Convert.ToDateTime("1999-1-1"),
                 Password = "123456",
-                Phone = "09",
-                ShoppingCash = 100
+                Phone = "0911111",
+                ShoppingCash = 100,
+                Email="zxc"
             };
             CustomerRepository Repository = new CustomerRepository();
             Repository.Update(customer);
             var list = Repository.FindById(2);
             Assert.IsTrue(list.Password==customer.Password);
         }
-
+        [TestMethod]
+        public void DeleteCustomer()
+        {
+            Customer customer = new Customer()
+            {
+                CustomerID = 2
+            };
+            CustomerRepository Repository = new CustomerRepository();
+            Repository.Delete(customer);
+            var list = Repository.FindById(2);
+            Assert.IsTrue(list != null);
+        }
     }
+    
 }

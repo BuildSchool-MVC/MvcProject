@@ -27,12 +27,7 @@ namespace ModelsLibrary.Repository
             command.ExecuteNonQuery();
             connection.Close();
         }
-
-        public object FindById()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public void Update(OrderDetails model)
         {
             SqlConnection connection = new SqlConnection(
@@ -69,7 +64,7 @@ namespace ModelsLibrary.Repository
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.; database=BuildSchool; integrated security=true");
-            var sql = "SELECT * FROM Customers WHERE OrderID=@OrderID";
+            var sql = "SELECT * FROM [Order Details] WHERE OrderID=@OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -85,6 +80,7 @@ namespace ModelsLibrary.Repository
 
             while (reader.Read())
             {
+                orderdetail = new OrderDetails();
                 for (var i = 0; i < reader.FieldCount; i++)
                 {
                     var fieldName = reader.GetName(i);
@@ -94,6 +90,7 @@ namespace ModelsLibrary.Repository
 
                     if (!reader.IsDBNull(i)) property.SetValue(orderdetail, reader.GetValue(i));
                 }
+                orderdetails.Add(orderdetail);
             }
             reader.Close();
             return orderdetails;

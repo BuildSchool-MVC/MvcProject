@@ -11,11 +11,73 @@ namespace UnitTest.Repositorys
     public class OrderRepositoryTest
     {
         [TestMethod]
+        public void TestCheckStatus()
+        {
+            var repository = new OrderRepository();
+            var order = repository.CheckStatus("1");
+            Assert.IsTrue(order != null);
+        }
+
+
+        [TestMethod()]
+        public void TestCreate()
+        {
+            Order model = new Order()
+            {
+                OrderID = 3,
+                OrderDay = new DateTime(2018, 11, 07),
+                CustomerID = 2,
+                Transport = "宅配",
+                Payment = "信用卡",
+                Status = "處理中",
+                StatusUpdateDay = DateTime.Now
+            };
+            OrderRepository orders = new OrderRepository();
+            orders.Create(model);
+            var list = orders.FindById(model.OrderID.ToString());
+            Assert.IsTrue(list != null);
+        }
+
+        [TestMethod()]
+        public void TestUpdate()
+        {
+            Order model = new Order()
+            {
+                OrderID = 4,
+                OrderDay = new DateTime(2018, 11, 07),
+                CustomerID = 1,
+                Transport = "宅配",
+                Payment = "信用卡",
+                Status = "處理中",
+                StatusUpdateDay = DateTime.Now
+            };
+            OrderRepository orders = new OrderRepository();
+            orders.Create(model);
+            var list = orders.FindById(model.OrderID.ToString());
+            Assert.IsTrue(list != null);
+        }
+
+        [TestMethod()]
+        public void TestUpdateStatus()
+        {
+            Order model = new Order()
+            {
+                OrderID = 1,
+                Status = "處理中",
+                StatusUpdateDay = DateTime.Now
+            };
+            OrderRepository orders = new OrderRepository();
+            orders.UpdateStatus(model);
+            Assert.IsTrue(model.Status == "處理中");
+        }
+
+
+        [TestMethod]
         public void TestGetAll()
         {
             var repository = new OrderRepository();
             var order = repository.GetAll();
-            Assert.IsTrue(order.Count() == 1);
+            Assert.IsTrue(order.Count() > 0);
         }
 
         [TestMethod]
@@ -26,27 +88,6 @@ namespace UnitTest.Repositorys
             Assert.IsTrue(order != null);
         }
 
-        #region 其他測試屬性
-        //
-        // 您可以使用下列其他屬性撰寫測試: 
-        //
-        // 執行該類別中第一項測試前，使用 ClassInitialize 執行程式碼
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // 在類別中的所有測試執行後，使用 ClassCleanup 執行程式碼
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // 在執行每一項測試之前，先使用 TestInitialize 執行程式碼 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // 在執行每一項測試之後，使用 TestCleanup 執行程式碼
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
     }
 }

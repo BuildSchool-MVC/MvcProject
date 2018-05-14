@@ -11,11 +11,13 @@ namespace ModelsLibrary.Repositorys
 {
     public class OrderRepository
     {
-        public void Create(Order model)
+        private string _connectionString = "data source =. ; database = BuildSchool ; integrated security=true";
+
+        public void Create(Order model)  //新增訂單
         {
-            SqlConnection connection = new SqlConnection(
-                "data source =. ; database = BuildSchool ; integrated security=true");
-            var sql = "INSERT INTO [Order] VALUES (@OrderID , @OrderDay , @CustomerID , @Transport , @Payment , @Status)";
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"INSERT INTO [Order] 
+                        VALUES (@OrderID , @OrderDay , @CustomerID , @Transport , @Payment , @Status , @StatusUpdateDay)";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -25,17 +27,19 @@ namespace ModelsLibrary.Repositorys
             command.Parameters.AddWithValue("@Transport", model.Transport);
             command.Parameters.AddWithValue("@Payment", model.Payment);
             command.Parameters.AddWithValue("@Status", model.Status);
+            command.Parameters.AddWithValue("@StatusUpdateDay", model.StatusUpdateDay);
 
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
         }
 
-        public void Update(Order model)
+        public void Update(Order model)  //修改訂單
         {
-            SqlConnection connection = new SqlConnection(
-                "data source =. ; database = BuildSchool ; integrated security=true");
-            var sql = "UPDATE [Order] SET OrderDay = @OrderDay , CustomerID = @CustomerID , Transport = @Transport , Payment = @Payment , Status = @Status";
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"UPDATE [Order] 
+                        SET OrderDay = @OrderDay , CustomerID = @CustomerID , Transport = @Transport , Payment = @Payment , Status = @Status , StatusUpdateDay = @StatusUpdateDay 
+                        WHERE OrderID = @OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -45,31 +49,38 @@ namespace ModelsLibrary.Repositorys
             command.Parameters.AddWithValue("@Transport", model.Transport);
             command.Parameters.AddWithValue("@Payment", model.Payment);
             command.Parameters.AddWithValue("@Status", model.Status);
+            command.Parameters.AddWithValue("@StatusUpdateDay", model.StatusUpdateDay);
 
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
         }
 
-        public void Delete(Order model)
+
+        public void UpdateStatus(Order model)  //修改訂單狀態
         {
-            SqlConnection connection = new SqlConnection(
-                "data source =. ; database = BuildSchool ; integrated security=true");
-            var sql = "DELETE FROM [Order] WHERE OrderID = @OrderID";
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"UPDATE [Order] 
+                        SET Status = @Status , StatusUpdateDay = @StatusUpdateDay 
+                        WHERE OrderID = @OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
+
             command.Parameters.AddWithValue("@OrderID", model.OrderID);
+            command.Parameters.AddWithValue("@Status", model.Status);
+            command.Parameters.AddWithValue("@StatusUpdateDay", model.StatusUpdateDay);
 
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
         }
 
-        public Order FindById(string orderId)
+        public Order CheckStatus(string orderId) //查詢訂單狀態
         {
-            SqlConnection connection = new SqlConnection(
-                "data source =. ; database = BuildSchool ; integrated security=true");
-            var sql = "SELECT * FROM [Order] WHERE OrderID = @OrderID";
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"SELECT Status
+                        FROM [Order]
+                        WHERE OrderID = @OrderID";
 
             SqlCommand command = new SqlCommand(sql, connection);
 
@@ -78,7 +89,48 @@ namespace ModelsLibrary.Repositorys
             connection.Open();
 
             var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-            //var order = new Order();
+            var properties = typeof(Order).GetProperties();
+            Order order = null;
+
+
+            while (reader.Read())
+            {
+                order = new Order();
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var fieldName = "Status";
+                    var property = properties.FirstOrDefault(
+                        p => p.Name == fieldName);
+
+                    if (property == null)
+                        continue;
+
+                    if (!reader.IsDBNull(i))
+                        property.SetValue(order,
+                            reader.GetValue(i));
+                }
+
+            }
+
+            reader.Close();
+
+            return order;
+
+        }
+
+        public Order FindById(string orderId) //用id查詢
+        {
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            var sql = @"SELECT * FROM [Order] 
+                        WHERE OrderID = @OrderID";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@OrderID", orderId);
+
+            connection.Open();
+
+            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
             var properties = typeof(Order).GetProperties();
             Order order = null;
 
@@ -107,10 +159,9 @@ namespace ModelsLibrary.Repositorys
             return order;
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<Order> GetAll()  //查詢所有資料
         {
-            SqlConnection connection = new SqlConnection(
-                            "data source =.;database =BuildSchool; integrated security=true");
+            SqlConnection connection = new SqlConnection(this._connectionString);
             var sql = "SELECT * FROM [Order]";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -122,12 +173,13 @@ namespace ModelsLibrary.Repositorys
             while (reader.Read())
             {
                 var order = new Order();
-                order.OrderID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("OrderID")).ToString());
-                order.OrderDay = Convert.ToDateTime(reader.GetValue(reader.GetOrdinal("OrderDay")).ToString());
-                order.CustomerID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("CustomerID")).ToString());
+                order.OrderID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("OrderID")));
+                order.OrderDay = Convert.ToDateTime(reader.GetValue(reader.GetOrdinal("OrderDay")));
+                order.CustomerID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("CustomerID")));
                 order.Transport = reader.GetValue(reader.GetOrdinal("Transport")).ToString();
                 order.Payment = reader.GetValue(reader.GetOrdinal("Payment")).ToString();
                 order.Status = reader.GetValue(reader.GetOrdinal("Status")).ToString();
+                order.StatusUpdateDay = Convert.ToDateTime(reader.GetValue(reader.GetOrdinal("StatusUpdateDay")));
                 orders.Add(order);
             }
 

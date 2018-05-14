@@ -18,14 +18,16 @@ namespace ModelsLibrary.Repositories
                 "data source=.; database=BuildSchool_new; integrated security=true");
             var sql = "INSERT INTO Categories VALUES (@Cid, @Cname)";
 
-            SqlCommand command = new SqlCommand(sql, connection);
+            connection.Execute(sql, new { Cid = model.CategoryID, Cname = model.CategoryName });
 
-            command.Parameters.AddWithValue("@Cid", model.CategoryID);
-            command.Parameters.AddWithValue("@Cname", model.CategoryName);
+            //SqlCommand command = new SqlCommand(sql, connection);
 
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+            //command.Parameters.AddWithValue("@Cid", model.CategoryID);
+            //command.Parameters.AddWithValue("@Cname", model.CategoryName);
+
+            //connection.Open();
+            //command.ExecuteNonQuery();
+            //connection.Close();
         }
 
         public void Delete(Categories model)
@@ -34,29 +36,33 @@ namespace ModelsLibrary.Repositories
                "data source=.; database=BuildSchool_new; integrated security=true");
             var sql = "DELETE FROM Categories WHERE CategoryID = @Cid";
 
-            SqlCommand command = new SqlCommand(sql, connection);
+            connection.Execute(sql, new { Cid = model.CategoryID });
 
-            command.Parameters.AddWithValue("@Cid", model.CategoryID);
+            //SqlCommand command = new SqlCommand(sql, connection);
 
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+            //command.Parameters.AddWithValue("@Cid", model.CategoryID);
+
+            //connection.Open();
+            //command.ExecuteNonQuery();
+            //connection.Close();
         }
 
-        public void UpdateCategoryName(Categories model_1, Categories model_2)
+        public void UpdateCategoryName(Categories model, string cname)
         {
             SqlConnection connection = new SqlConnection(
               "data source=.; database=BuildSchool_new; integrated security=true");
             var sql = "UPDATE Categories SET CategoryName = @inputCName WHERE CategoryName = @SearchCName";
 
-            SqlCommand command = new SqlCommand(sql, connection);
+            connection.Execute(sql, new { SearchCName = model.CategoryName, inputCName = cname });
 
-            command.Parameters.AddWithValue("@SearchCName", model_1.CategoryName);
-            command.Parameters.AddWithValue("@inputCName", model_2.CategoryName);
+            //SqlCommand command = new SqlCommand(sql, connection);
 
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+            //command.Parameters.AddWithValue("@SearchCName", model_1.CategoryName);
+            //command.Parameters.AddWithValue("@inputCName", model_2.CategoryName);
+
+            //connection.Open();
+            //command.ExecuteNonQuery();
+            //connection.Close();
         }
 
         public Categories GetByID(int Cid)
@@ -64,7 +70,7 @@ namespace ModelsLibrary.Repositories
             SqlConnection connection = new SqlConnection(
                 "data source=DESKTOP-DO7A434\\BUILDSCHOOLSQL; database=BuildSchool_new; integrated security=true");
 
-            var list = connection.Query<Categories>("SELECT * FROM Categories WHERE CategoryID = {=id}"
+            var list = connection.Query<Categories>("SELECT * FROM Categories WHERE CategoryID = @id"
                 , new { id = Cid });
 
             Categories category = null;

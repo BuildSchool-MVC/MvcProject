@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace ModelsLibrary.Repositories
 {
@@ -61,36 +62,24 @@ namespace ModelsLibrary.Repositories
         public Categories GetByID(int Cid)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=BuildSchool; integrated security=true");
-            var sql = "SELECT * FROM Categories WHERE CategoryID = @CId";
+                "data source=DESKTOP-DO7A434\\BUILDSCHOOLSQL; database=BuildSchool_new; integrated security=true");
 
-            SqlCommand command = new SqlCommand(sql, connection);
+            var list = connection.Query<Categories>("SELECT * FROM Categories WHERE CategoryID = {=id}"
+                , new { id = Cid });
 
-            command.Parameters.AddWithValue("@Cid", Cid);
-
-            connection.Open();
-
-            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-            var properties = typeof(Categories).GetProperties();
             Categories category = null;
-
-            while (reader.Read())
+            foreach (var item in list)
             {
-                category = new Categories();
-                for (var i = 0; i < reader.FieldCount; i++)
-                {
-                    var fieldName = reader.GetName(i);
-                    var property = properties.FirstOrDefault(p => p.Name == fieldName);
-
-                    if (property == null) continue;
-
-                    if (!reader.IsDBNull(i)) property.SetValue(category, reader.GetValue(i));
-                }
+                category = item;
             }
 
-            reader.Close();
-
             return category;
+        }
+
+        public IEnumerable<Categories> GetAll()
+        {
+            var connection = new SqlConnection("data source=DESKTOP-DO7A434\\BUILDSCHOOLSQL; database=BuildSchool_new; integrated security=true");
+            return connection.Query<Categories>("SELECT * FROM Categories");
         }
     }
 }

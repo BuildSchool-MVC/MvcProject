@@ -59,10 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbReaderModelBinder\DbReaderModelBinder.cs" />
-    <Compile Include="Repositorys\CustomerRepositoryTest.cs" />
-    <Compile Include="Repositorys\OrderDetailsRepositoryTest.cs" />
-    <Compile Include="Repositorys\OrderRepositoryTest.cs" />
-    <Compile Include="Repositorys\ProductsRepositoryTests.cs" />
+    <Compile Include="Repositories\CustomerRepositoryTest.cs" />
+    <Compile Include="Repositories\OrderDetailsRepositoryTest.cs" />
+    <Compile Include="Repositories\OrderRepositoryTest.cs" />
+    <Compile Include="Repositories\ProductsRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

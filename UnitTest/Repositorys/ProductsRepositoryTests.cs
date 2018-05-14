@@ -17,7 +17,15 @@ namespace ModelsLibrary.Repositorys.Tests
         {
             ProductsRepository repository = new ProductsRepository();
             var list=repository.GetAll();
-            Assert.IsTrue(list.Count()>0);
+            Assert.IsTrue(list.Count()==4);
+        }
+
+        [TestMethod()]
+        public void GetColorTest()
+        {
+            ProductsRepository repository = new ProductsRepository();
+            var list = repository.GetColor("yellow");
+            Assert.IsTrue(list.Count() == 1 );
         }
 
         [TestMethod()]
@@ -33,9 +41,9 @@ namespace ModelsLibrary.Repositorys.Tests
         public void FindByID2Test()
         {
             ProductsRepository products = new ProductsRepository();
-            var list = products.FindByID("10");
+            var list = products.FindByID("3");
 
-            Assert.IsTrue(list == null);
+            Assert.IsTrue(list.CategoryID == 3);
         }
 
         [TestMethod()]
@@ -43,7 +51,7 @@ namespace ModelsLibrary.Repositorys.Tests
         {
             Products model = new Products()
             {
-                ProductID = 2,
+                ProductID = 1,
                 ProductName = "高腰開岔長裙",
                 UnitPrice = 200,
                 UnitsInStock = 50,
@@ -65,13 +73,13 @@ namespace ModelsLibrary.Repositorys.Tests
             Products model = new Products()
             {
                 ProductID = 4,
-                UnitPrice = 180
+                UnitPrice = 220
             };
             ProductsRepository products = new ProductsRepository();
             products.UpdateUnitPrice(model);
             var list = products.FindByID("4");
 
-            Assert.IsTrue(list.UnitPrice==model.UnitPrice);
+            Assert.IsTrue(list.UnitPrice==220);
         }
 
         [TestMethod()]
@@ -80,13 +88,13 @@ namespace ModelsLibrary.Repositorys.Tests
             Products model = new Products()
             {
                 ProductID = 4,
-                UnitsInStock=30
+                UnitsInStock=50
             };
             ProductsRepository products = new ProductsRepository();
             products.UpdateStock(model);
             var list = products.FindByID("4");
 
-            Assert.IsTrue(list.UnitsInStock==model.UnitsInStock);
+            Assert.IsTrue(list.UnitsInStock==50);
         }
 
         [TestMethod()]
@@ -95,7 +103,7 @@ namespace ModelsLibrary.Repositorys.Tests
             Products model = new Products()
             {
                 ProductID = 4,
-                Downtime=new DateTime(2018,05,10)
+                Downtime=new DateTime(2018,05,12)
             };
             ProductsRepository products = new ProductsRepository();
             products.UpdateDowntime(model);

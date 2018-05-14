@@ -15,7 +15,7 @@ namespace ModelsLibrary.Repository
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.;database=BuildSchool;integrated security=true");
-            var sql = "INSERT INTO Customer VALUES(@CustomerID,@CustomerName,@Birthday,@Password,@ShoppingCasg,@Account,@Email,@Phone)";
+            var sql = "INSERT INTO Customer VALUES(@CustomerID,@CustomerName,@Birthday,@Password,@ShoppingCash,@Account,@Phone,@Email)";
             SqlCommand command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@CustomerID", model.CustomerID);
@@ -24,8 +24,9 @@ namespace ModelsLibrary.Repository
             command.Parameters.AddWithValue("@Account", model.Account);
             command.Parameters.AddWithValue("@Password", model.Password);
             command.Parameters.AddWithValue("@ShoppingCash", model.ShoppingCash);
-            command.Parameters.AddWithValue("@Email", model.Email);
             command.Parameters.AddWithValue("@Phone", model.Phone);
+            command.Parameters.AddWithValue("@Email", model.Email);
+            
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -36,7 +37,7 @@ namespace ModelsLibrary.Repository
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.;database=BuildSchool;integrated security=true");
-            var sql = "UPDATE Customer SET CustomerName=@CustomerName,Password=@Password,ShoppingCasg=@ShoppingCasg,Email=@Email,Phone=@Phone WHERE CustomerID=@CustomerID";
+            var sql = "UPDATE Customer SET CustomerName=@CustomerName,Password=@Password,ShoppingCash=@ShoppingCash,Email=@Email,Phone=@Phone WHERE CustomerID=@CustomerID";
             SqlCommand command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@CustomerID", model.CustomerID);
@@ -57,8 +58,7 @@ namespace ModelsLibrary.Repository
             var sql = "DELETE FROM Customer WHERE CustomerID=@CustomerID";
             SqlCommand command = new SqlCommand(sql, connection);
 
-            command.Parameters.AddWithValue("@CustomerID", model.CustomerID);
-            
+            command.Parameters.AddWithValue("@CustomerID", model.CustomerID);        
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();

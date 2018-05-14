@@ -13,15 +13,15 @@ namespace UnitTest
         {
             var repository = new OrderDetailsRepository();
             var orderdetails = repository.GetAll();
-            Assert.IsTrue(orderdetails.Count() == 0);
+            Assert.IsTrue(orderdetails.Count() == 1);
         }
 
         [TestMethod]
         public void FindById()
         {
             var repository = new OrderDetailsRepository();
-            var orderdetails = repository.FindById("null");
-            Assert.IsTrue(orderdetails.Count() == 0);
+            var orderdetails = repository.FindById("1");
+            Assert.IsTrue(orderdetails != null);
         }
     }
     

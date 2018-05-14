@@ -1,5 +1,4 @@
 ﻿using ModelsLibrary.DtO_Models;
-using Repositorys.DbReaderModelBinder;
 using System;
 using System.Collections.Generic;
 using System.Data;

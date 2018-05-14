@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsLibrary.Repository
+namespace ModelsLibrary.Repositories
 {
     public class OrderDetailsRepository
     {

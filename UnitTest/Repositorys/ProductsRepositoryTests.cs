@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelsLibrary.DtO_Models;
-using ModelsLibrary.Repositorys;
+using ModelsLibrary.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsLibrary.Repositorys.Tests
+namespace ModelsLibrary.Repositories.Tests
 {
     [TestClass()]
     public class ProductsRepositoryTests

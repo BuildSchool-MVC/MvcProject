@@ -2,9 +2,10 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelsLibrary.DtO_Models;
-using ModelsLibrary.Repositorys;
+using ModelsLibrary.Repositories;
 
-namespace UnitTest.Repositorys
+namespace UnitTest.Repositories
+
 {
    
     [TestClass]

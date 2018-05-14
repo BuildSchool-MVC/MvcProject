@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelsLibrary.DtO_Models;
-using ModelsLibrary.Repository;
+using ModelsLibrary.Repositories;
 
 namespace CustomerTest
 {

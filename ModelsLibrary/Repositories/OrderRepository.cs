@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace ModelsLibrary.Repositorys
+namespace ModelsLibrary.Repositories
 {
     public class OrderRepository
     {

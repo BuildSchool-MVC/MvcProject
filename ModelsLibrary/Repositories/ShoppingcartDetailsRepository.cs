@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using ModelsLibrary.DtO_Models;
 
-namespace ModelsLibrary.Repository
+namespace ModelsLibrary.Repositories
 {
     public class ShoppingcartDetailsRepository
     {

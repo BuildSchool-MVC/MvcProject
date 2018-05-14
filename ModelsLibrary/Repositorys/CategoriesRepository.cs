@@ -58,7 +58,7 @@ namespace ModelsLibrary.Repositorys
             connection.Close();
         }
 
-        public void GetByID(Categories model)
+        public Categories GetByID(int Cid)
         {
             SqlConnection connection = new SqlConnection(
                 "data source=.; database=BuildSchool; integrated security=true");
@@ -66,11 +66,31 @@ namespace ModelsLibrary.Repositorys
 
             SqlCommand command = new SqlCommand(sql, connection);
 
-            command.Parameters.AddWithValue("@Cid", model.CategoryID);
+            command.Parameters.AddWithValue("@Cid", Cid);
 
             connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
+
+            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+            var properties = typeof(Categories).GetProperties();
+            Categories category = null;
+
+            while (reader.Read())
+            {
+                category = new Categories();
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var fieldName = reader.GetName(i);
+                    var property = properties.FirstOrDefault(p => p.Name == fieldName);
+
+                    if (property == null) continue;
+
+                    if (!reader.IsDBNull(i)) property.SetValue(category, reader.GetValue(i));
+                }
+            }
+
+            reader.Close();
+
+            return category;
         }
     }
 }

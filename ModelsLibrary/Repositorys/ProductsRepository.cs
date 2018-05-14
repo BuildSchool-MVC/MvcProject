@@ -1,4 +1,5 @@
 ﻿using ModelsLibrary.DtO_Models;
+using Repositorys.DbReaderModelBinder;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -114,8 +115,8 @@ namespace ModelsLibrary.Repositorys
 
             while (reader.Read())
             {
-                products=new Products();
-                for(var i = 0; i < reader.FieldCount; i++)
+                products = new Products();
+                for (var i = 0; i < reader.FieldCount; i++)
                 {
                     var fieldName = reader.GetName(i);
                     var property = properties.FirstOrDefault(p => p.Name == fieldName);
@@ -146,6 +147,7 @@ namespace ModelsLibrary.Repositorys
 
             while (reader.Read())
             {
+                //product = DbReaderModelBinder<Products>.Bind(reader);
                 product = new Products();
                 product.ProductID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("ProductID")));
                 product.ProductName = Convert.ToString(reader.GetValue(reader.GetOrdinal("ProductName")));

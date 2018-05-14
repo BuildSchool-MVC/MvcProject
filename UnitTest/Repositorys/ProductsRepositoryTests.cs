@@ -24,7 +24,7 @@ namespace ModelsLibrary.Repositorys.Tests
         public void FindByIDTest()
         {
             ProductsRepository products = new ProductsRepository();
-            var list = products.FindByID("1");
+            var list = products.FindByID("2");
 
             Assert.IsTrue(list != null);
         }

@@ -27,12 +27,7 @@ namespace ModelsLibrary.Repository
             command.ExecuteNonQuery();
             connection.Close();
         }
-
-        public object FindById()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public void Update(OrderDetails model)
         {
             SqlConnection connection = new SqlConnection(

@@ -99,7 +99,7 @@ namespace ModelsLibrary.Repository
         {
             var Photos = new List<ProductPhoto>();
 
-            Photos = FindById(0);
+            Photos = FindById(0).ToList();
 
             return Photos;
         }

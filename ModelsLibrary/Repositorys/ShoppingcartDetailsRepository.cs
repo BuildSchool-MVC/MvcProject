@@ -14,7 +14,7 @@ namespace ModelsLibrary.Repository
         public void Create(ShoppingcartDetails model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "INSERT INTO ShoppingcartDetails VALUES (@CustomerID, @ProductID, @Quantity)";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -31,7 +31,7 @@ namespace ModelsLibrary.Repository
         public void Update(ShoppingcartDetails model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "UPDATE ShoppingcartDetails SET CustomerID=@CustomerID, ProductID=@ProductID, Quantity=@Quantity";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -48,7 +48,7 @@ namespace ModelsLibrary.Repository
         public void Delete(ShoppingcartDetails model)
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "DELETE FROM ShoppingcartDetails WHERE CustomerID = @CustomerID";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -63,7 +63,7 @@ namespace ModelsLibrary.Repository
         public ShoppingcartDetails FindById(int CustomerID, int ProductID)
         {//可找Quantity
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "SELECT * FROM ShoppingcartDetails WHERE CustomerID = @CustomerID && ProductID = @ProductID";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -101,7 +101,7 @@ namespace ModelsLibrary.Repository
         public IEnumerable<ShoppingcartDetails> GetAll()
         {
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "SELECT * FROM ShoppingcartDetails";
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -128,7 +128,7 @@ namespace ModelsLibrary.Repository
         {
             decimal Total = 0;
             SqlConnection connection = new SqlConnection(
-                "data source=.; database=northwind; integrated security=true");
+                "data source=.; database=BuildSchool; integrated security=true");
             var sql = "SELECT * FROM Products WHERE ProductID = @ProductID";
 
             SqlCommand command = new SqlCommand(sql, connection);

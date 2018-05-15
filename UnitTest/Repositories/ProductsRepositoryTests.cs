@@ -51,7 +51,7 @@ namespace ModelsLibrary.Repositories.Tests
         {
             Products model = new Products()
             {
-                ProductID = 1,
+                ProductID = 5,
                 ProductName = "高腰開岔長裙",
                 UnitPrice = 200,
                 UnitsInStock = 50,
